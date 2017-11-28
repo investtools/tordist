@@ -1,5 +1,9 @@
 class Tordist::Generator
 
+  def initialize(clearing_id)
+    @clearing_id = clearing_id
+  end
+
   def generate(transactions)
     @transactions = transactions
     tordist_string = header
@@ -11,7 +15,6 @@ class Tordist::Generator
   end
 
   def body
-    # BBEEF3       0783382000000000680000000000000V216044400001809257C1 +000000000000000         
     body_string = ""
     @transactions.each do |transaction|
       @transaction = transaction
@@ -27,7 +30,7 @@ class Tordist::Generator
   end
 
   def header_broker
-    @transactions.first.broker
+    @clearing_id
   end
 
   def symbol
