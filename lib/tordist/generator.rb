@@ -18,7 +18,7 @@ class Tordist::Generator
     body_string = ""
     @transactions.each do |transaction|
       @transaction = transaction
-      body_string = body_string + "#{type}#{symbol}#{@transaction.broker_alias_code}#{client_digit}#{quantity}#{price}#{@transaction.side}#{liquidation_portfolio}#{nil_user}#{liquidation_type}#{bvmf}#{nil_last_fields}#{@transaction.broker}\n"
+      body_string = body_string + "#{type}#{symbol}#{@transaction.broker_alias_code}#{client_digit}#{quantity}#{price}#{@transaction.side}#{liquidation_portfolio}#{nil_user}#{client}#{client_digit}#{liquidation_type}#{bvmf}#{increase_percentage}#{deadline}#{order_number}#{broker}\n"
     end
     return body_string
   end
@@ -34,7 +34,7 @@ class Tordist::Generator
   end
 
   def quantity
-    fill_with_chars(12, @transaction.quantity.to_i.to_s, :preceding, "0")
+    fill_with_chars(12, @transaction.quantity.abs.to_i.to_s, :preceding, "0")
   end
 
   def type
@@ -54,7 +54,15 @@ class Tordist::Generator
   end
 
   def nil_user
-    "000000000000000"
+    fill_with_chars(5, "", :following, "0")
+  end
+
+  def client
+    fill_with_chars(9, "", :following, "0")
+  end
+
+  def client_digit
+    fill_with_chars(1, "", :following, "0")
   end
 
   def liquidation_type
@@ -62,11 +70,23 @@ class Tordist::Generator
   end
 
   def bvmf
-    "1"
+    fill_with_chars(2, "1", :following, " ")
   end
 
-  def nil_last_fields
-   " +000000000000000"
+  def increase_percentage
+    fill_with_chars(12, "+", :following, "0")
+  end
+
+  def deadline
+    fill_with_chars(4, "", :following, "0")
+  end
+
+  def order_number
+    fill_with_chars(9, "", :following, "0")
+  end
+
+  def broker
+    fill_with_chars(4, @transaction.broker, :preceding, "0")
   end
 
   def fill_with_chars(total_size, text, direction, char)
