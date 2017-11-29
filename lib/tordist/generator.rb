@@ -11,7 +11,7 @@ class Tordist::Generator
   end
 
   def header
-    return "H#{header_date}#{header_broker}TORDISTM\n"
+    return fill_with_chars(92, "H#{header_date}#{@clearing_id}TORDISTM", :following, " ")+"\n"
   end
 
   def body
@@ -29,33 +29,12 @@ class Tordist::Generator
     @transactions.first.date.strftime("%d/%m/%Y")
   end
 
-  def header_broker
-    @clearing_id
-  end
-
   def symbol
-    symbol_text = @transaction.symbol
-    remaining_chars = ""
-    field_size = 12
-    remaining_chars_size = field_size - @transaction.symbol.size
-    for i in 1..remaining_chars_size
-       remaining_chars = remaining_chars + " "
-    end
-
-    symbol_text = symbol_text + remaining_chars
-
+    fill_with_chars(12, @transaction.symbol, :following, " ")
   end
 
   def quantity
-    quantity_text = @transaction.quantity.to_i.to_s 
-    remaining_chars = ""
-    field_size = 12
-    remaining_chars_size = field_size - @transaction.quantity.to_i.to_s.size
-    for i in 0..remaining_chars_size
-       remaining_chars = remaining_chars + "0"
-    end
-
-    quantity_text = remaining_chars + quantity_text
+    fill_with_chars(12, @transaction.quantity.to_i.to_s, :preceding, "0")
   end
 
   def type
@@ -67,7 +46,7 @@ class Tordist::Generator
   end
 
   def price
-    "0000000000"
+    fill_with_chars(11, "", :preceding, "0")
   end
 
   def liquidation_portfolio
@@ -90,6 +69,16 @@ class Tordist::Generator
    " +000000000000000"
   end
 
-
-
+  def fill_with_chars(total_size, text, direction, char)
+    size = total_size - text.size
+    char_text = ""
+    for i in 1..size
+      char_text = char_text + char
+    end
+    if (direction == :following)
+      return text + char_text
+    elsif (direction == :preceding)
+      return char_text + text
+    end
+  end
 end
