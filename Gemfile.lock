@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tordist (0.1.2)
+    tordist (0.1.3)
       attr_extras
 
 GEM

@@ -11,14 +11,14 @@ class Tordist::Generator
   end
 
   def header
-    return fill_with_chars(92, "H#{header_date}#{@clearing_id}TORDISTM", :following, " ")+"\n"
+    return fill_with_chars(92, "H#{header_date}#{@clearing_id}TORDISTM", :following, " ")+"\r\n"
   end
 
   def body
     body_string = ""
     @transactions.each do |transaction|
       @transaction = transaction
-      body_string = body_string + "#{type}#{symbol}#{@transaction.broker_alias_code}#{client_digit}#{quantity}#{price}#{@transaction.side}#{liquidation_portfolio}#{nil_user}#{client}#{client_digit}#{liquidation_type}#{bvmf}#{increase_percentage}#{deadline}#{order_number}#{broker}\n"
+      body_string = body_string + "#{type}#{symbol}#{@transaction.broker_alias_code}#{client_digit}#{quantity}#{price}#{@transaction.side}#{liquidation_portfolio}#{nil_user}#{client}#{client_digit}#{liquidation_type}#{bvmf}#{increase_percentage}#{deadline}#{order_number}#{broker}\r\n"
     end
     return body_string
   end
