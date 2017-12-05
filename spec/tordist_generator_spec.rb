@@ -10,7 +10,7 @@ describe Tordist::Generator do
 
       @transactions = []
 
-      @clearing_id = "00114"
+      @clearing_id = "114"
       @transactions << Tordist::Transaction.new({
         symbol: "PETR4",
         date: Date.parse('2017-11-23'),

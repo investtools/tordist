@@ -11,7 +11,7 @@ class Tordist::Generator
   end
 
   def header
-    return fill_with_chars(92, "H#{header_date}#{@clearing_id}TORDISTM", :following, " ")+"\r\n"
+    return fill_with_chars(92, "H#{header_date}#{fill_with_chars(5, @clearing_id, :preceding, "0")}TORDISTM", :following, " ")+"\r\n"
   end
 
   def body
