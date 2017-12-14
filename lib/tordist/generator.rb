@@ -86,7 +86,7 @@ class Tordist::Generator
   end
 
   def broker
-    fill_with_chars(4, @transaction.broker, :preceding, "0")
+    fill_with_chars(5, @transaction.broker, :preceding, "0")
   end
 
   def fill_with_chars(total_size, text, direction, char)

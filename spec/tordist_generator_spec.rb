@@ -6,7 +6,7 @@ describe Tordist::Generator do
   describe "#generate" do
     before do
       @header     = "H23/11/201700114TORDISTM                                                                    "
-      @first_line = "BPETR4       0793929000000000100000000000000C216000000000000000C1 +0000000000000000000000000114"
+      @first_line = "BPETR4       0793929000000000100000000000000C216000000000000000C1 +00000000000000000000000000114"
 
       @transactions = []
 
@@ -126,13 +126,13 @@ describe Tordist::Generator do
 
     it "should generate broker properly" do
       tordist_text = Tordist::Generator.new(@clearing_id).generate(@transactions)
-      expect(tordist_text.split("\r\n")[1][91..95]).to eq "0114"
+      expect(tordist_text.split("\r\n")[1][91..95]).to eq "00114"
     end
 
     it "should have 95 char positions" do
       tordist_text = Tordist::Generator.new(@clearing_id).generate(@transactions)
-      expect(tordist_text.split("\r\n")[1].length).to eq 95
-      expect(tordist_text.split("\r\n")[2].length).to eq 95
+      expect(tordist_text.split("\r\n")[1].length).to eq 96
+      expect(tordist_text.split("\r\n")[2].length).to eq 96
     end
 
     it "should generate first line correctly" do
