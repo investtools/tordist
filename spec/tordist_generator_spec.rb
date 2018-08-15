@@ -18,7 +18,7 @@ describe Tordist::Generator do
         side: "C",
         quantity: 1000.0,
         price: 10.0,
-        broker_alias_code: "0793929"
+        broker_alias_code: "793929"
       })
 
       @transactions << Tordist::Transaction.new({
@@ -28,7 +28,7 @@ describe Tordist::Generator do
         side: "V",
         quantity: -1000.0,
         price: 10.0,
-        broker_alias_code: "0797700"
+        broker_alias_code: "797700"
       })
     end
 

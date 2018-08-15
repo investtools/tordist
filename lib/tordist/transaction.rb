@@ -12,7 +12,7 @@ class Tordist::Transaction
   end
 
   def broker_alias_code
-    @row[:broker_alias_code]
+    @row[:broker_alias_code].rjust(7,'0')
   end
   
   def side
