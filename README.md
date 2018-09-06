@@ -34,6 +34,19 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/tordist.
 
+## Publish
+
+eh soh vc dar gem build
+e o nome da gem com .gemspec
+tipo gem build tordist.gemspec
+na real o processo eh
+1) faz a alteracao
+2) buillda (com o comando acima)
+3) publica com gem push tordist-0.4.gem (por exemplo)
+talvez vc tenha q ter permissao no gemspec
+no gemspec no rubygem (edited)
+
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
