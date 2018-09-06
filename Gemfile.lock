@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tordist (0.1.6)
+    tordist (0.1.7)
       attr_extras
 
 GEM
@@ -73,4 +73,4 @@ DEPENDENCIES
   tordist!
 
 BUNDLED WITH
-   1.16.0
+   1.16.2

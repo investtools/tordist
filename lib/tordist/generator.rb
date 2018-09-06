@@ -11,33 +11,44 @@ class Tordist::Generator
   end
 
   def header
-    return fill_with_chars(92, "H#{header_date}#{fill_with_chars(5, @clearing_id, :preceding, "0")}TORDISTM", :following, " ")+"\r\n"
+    "H#{header_date}#{@clearing_id.rjust(5,'0')}#{file_name}#{distribution_type}".ljust(92," ") +"\r\n"
   end
 
   def body
     body_string = ""
     @transactions.each do |transaction|
       @transaction = transaction
-      body_string = body_string + "#{type}#{symbol}#{@transaction.broker_alias_code}#{client_digit}#{quantity}#{price}#{@transaction.side}#{liquidation_portfolio}#{nil_user}#{client}#{client_digit}#{liquidation_type}#{bvmf}#{increase_percentage}#{deadline}#{order_number}#{broker}\r\n"
+      body_string = body_string + "#{type}#{symbol}#{@transaction.broker_alias_code.rjust(7,'0')}#{client_digit}#{quantity}#{price}#{@transaction.side}#{liquidation_portfolio}#{nil_user}#{client}#{client_digit}#{liquidation_type}#{bvmf}#{increase_percentage}#{deadline}#{order_number}#{broker}\r\n"
     end
     return body_string
   end
 
   protected
+  
+  def file_name
+    'TORDIST'
+  end
+  
+  def distribution_type
+    # 05 –	TIPO DA DISTRIBUIÇÃO
+    # “P” – PERCENTUAL, “M” – PREÇO MÉDIO POR LOTE, “D” – PREÇO DIGITADO, “O” – PREÇO MÉDIO POR ORDEM, “R” – PREÇO DIGITADO POR ORDEM.
+    'M'
+  end
 
   def header_date
     @transactions.first.date.strftime("%d/%m/%Y")
   end
 
   def symbol
-    fill_with_chars(12, @transaction.symbol, :following, " ")
+    @transaction.symbol.ljust(12, ' ')
   end
 
   def quantity
-    fill_with_chars(12, @transaction.quantity.abs.to_i.to_s, :preceding, "0")
+    @transaction.quantity.abs.to_i.to_s.rjust(12, '0')
   end
 
   def type
+    # FIXO “B”
     "B"
   end
 
@@ -46,7 +57,8 @@ class Tordist::Generator
   end
 
   def price
-    fill_with_chars(11, "", :preceding, "0")
+    # SOMENTE PARA TIPO DE DISTRIBUIÇÃO "D"
+    ''.rjust(11,'0')
   end
 
   def liquidation_portfolio
@@ -54,15 +66,15 @@ class Tordist::Generator
   end
 
   def nil_user
-    fill_with_chars(5, "", :following, "0")
+    ''.rjust(5,"0")
   end
 
   def client
-    fill_with_chars(9, "", :following, "0")
+    ''.rjust(9,'0')
   end
 
   def client_digit
-    fill_with_chars(1, "", :following, "0")
+    '0'
   end
 
   def liquidation_type
@@ -70,35 +82,23 @@ class Tordist::Generator
   end
 
   def bvmf
-    fill_with_chars(2, "1", :following, " ")
+    '1 '
   end
 
   def increase_percentage
-    fill_with_chars(12, "+", :following, "0")
+    '+'.ljust(12,'0')
   end
 
   def deadline
-    fill_with_chars(4, "", :following, "0")
+    ''.rjust(4,'0')
   end
 
   def order_number
-    fill_with_chars(9, "", :following, "0")
+    ''.rjust(9,'0')
   end
 
   def broker
-    fill_with_chars(5, @transaction.broker, :preceding, "0")
+    @transaction.broker.rjust(5,'0')
   end
 
-  def fill_with_chars(total_size, text, direction, char)
-    size = total_size - text.size
-    char_text = ""
-    for i in 1..size
-      char_text = char_text + char
-    end
-    if (direction == :following)
-      return text + char_text
-    elsif (direction == :preceding)
-      return char_text + text
-    end
-  end
 end

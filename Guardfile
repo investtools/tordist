@@ -3,6 +3,7 @@
 
 ## Uncomment and set this to only include directories you want to watch
 # directories %w(app lib config test spec feature)
+directories %w(lib spec)
 
 ## Uncomment to clear the screen before every task
 # clearing :on

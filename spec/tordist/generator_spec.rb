@@ -7,7 +7,6 @@ describe Tordist::Generator do
     before do
       @header     = "H23/11/201700114TORDISTM                                                                    "
       @first_line = "BPETR4       0793929000000000100000000000000C216000000000000000C1 +00000000000000000000000000114"
-
       @transactions = []
 
       @clearing_id = "114"
@@ -48,7 +47,7 @@ describe Tordist::Generator do
       expect(tordist_text.split("\r\n")[1][1..12]).to eq "PETR4       "
     end
 
-    it "should generates symbol properly" do
+    it "should generates broker_alias_code properly" do
       tordist_text = Tordist::Generator.new(@clearing_id).generate(@transactions)
       expect(tordist_text.split("\r\n")[1][13..19]).to eq "0793929"
     end
@@ -110,6 +109,7 @@ describe Tordist::Generator do
     end
 
     it "should generate increase percentage properly" do
+      # N(04)V08	67	78
       tordist_text = Tordist::Generator.new(@clearing_id).generate(@transactions)
       expect(tordist_text.split("\r\n")[1][66..77]).to eq "+00000000000"
     end

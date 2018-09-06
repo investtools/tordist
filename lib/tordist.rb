@@ -1,3 +1,5 @@
 require "tordist/version"
 require "tordist/generator"
+require "tordist/base_generator"
+require "tordist/generator2018"
 require "tordist/transaction"
